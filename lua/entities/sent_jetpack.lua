@@ -1,5 +1,9 @@
 AddCSLuaFile()
 
+if SERVER then
+	resource.AddFile( "materials/entities/sent_jetpack.png" )
+end
+
 DEFINE_BASECLASS( "base_predictedent" )
 
 ENT.Spawnable = true

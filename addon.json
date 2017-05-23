@@ -1,0 +1,15 @@
+{
+    "description": "It's a jetpack! You can equip it by pressing USE ( default key is E on your keyboard ).\nWASD to move, shift to hover, jump to rise up and crouch to go down.\n\nYou can unequip it by using \"pe_drop sent_jetpack\" in the console or by dying, there will be a panel for that in the future.",
+    "ignore": [
+        "logo.*",
+        ".git*",
+        "README.md"
+    ],
+    "logo": "logo.jpg",
+    "tags": [
+        "fun"
+    ],
+    "title": "Jetpack",
+    "type": "entity",
+    "workshopid": 931376012.0
+}
