@@ -53,6 +53,15 @@ else
 	ENT.StandaloneLinear = Vector( 0 , 0 , 0 )
 	
 	ENT.ShowPickupNotice = true
+	ENT.SpawnOnGroundConVar = CreateConVar( 
+		"sv_spawnjetpackonground" , 
+		"1", 
+		{ 
+			FCVAR_SERVER_CAN_EXECUTE, 
+			FCVAR_ARCHIVE 
+		}, 
+		"When true, it will spawn the jetpack on the ground, otherwise it will try equipping it right away, if you already have one equipped it will not do anything" 
+	)
 end
 
 --use this to calculate the position on the parent because I can't be arsed to deal with source's parenting bullshit with local angles and position
@@ -81,10 +90,20 @@ function ENT:SpawnFunction( ply, tr, ClassName )
 	local SpawnPos = tr.HitPos + tr.HitNormal * 36
 
 	local ent = ents.Create( ClassName )
-	ent:SetSlotName( ClassName )	--this is the best place to set the slot, don't modify it dynamically ingame
+	ent:SetSlotName( ClassName )	--this is the best place to set the slot, only modify it ingame when it's not equipped
 	ent:SetPos( SpawnPos )
 	ent:SetAngles( Angle( 0 , 0 , 180 ) )
 	ent:Spawn()
+	
+	--try equipping it, if we can't we'll just remove it
+	if not self.SpawnOnGroundConVar:GetBool() then
+		--forced should not be set here, as we still kinda want the equip logic to work as normal
+		if not ent:Attach( ply , false ) then
+			ent:Remove()
+			return
+		end
+	end
+	
 	return ent
 
 end
